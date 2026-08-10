@@ -1,0 +1,33 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archived pre-rebuild assets: original resume PDF (unredacted PII) and
+# personal photos. Never publish this folder — the resume PDF here bypasses
+# the email/purpose gate the live site enforces (see ResumeGate.tsx). The
+# gated copy served by the site lives in public/, which IS tracked.
+legacy/
+
+# Local Claude Code project settings — not meant to be published.
+.claude/

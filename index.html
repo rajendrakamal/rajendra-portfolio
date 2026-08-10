@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#16735c" />
+    <meta
+      name="description"
+      content="Rajendra Dharanikota — Strategic Data Analyst specializing in revenue analytics, pricing strategy, and executive reporting."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Rajendra Dharanikota — Strategic Data Analyst"
+    />
+    <meta
+      property="og:description"
+      content="Revenue analytics, pricing strategy, and executive reporting — selected projects and experience."
+    />
+
+    <!--
+      Kept in sync with `profile.name`/`profile.role` in src/data/content.ts —
+      this file is static HTML so it can't read that file directly, but
+      App.tsx also sets document.title at runtime from the same source.
+    -->
+    <title>Rajendra Dharanikota — Strategic Data Analyst</title>
+
+    <!-- Applies the saved theme before React mounts, avoiding a light/dark flash. -->
+    <script>
+      (function () {
+        var stored = localStorage.getItem("portfolio-theme");
+        var prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        if (stored === "dark" || (!stored && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
