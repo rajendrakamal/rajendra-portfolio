@@ -1,6 +1,6 @@
 ---
 title: Cohort Analysis Is Easy. Retention of What Is the Hard Part.
-date: 2026-08-10
+date: 2026-08-01
 excerpt: Cohort tables are everywhere in analytics decks. Most of them still don't answer the one question that actually matters, retention of what, exactly?
 tags: [Cohort Analysis, Retention, SQL]
 ---
