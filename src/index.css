@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+/* Font loading lives in index.html (preconnect + stylesheet link), not here
+   — see the comment there for why a CSS @import is worse for performance. */
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------- */
@@ -240,5 +241,51 @@
   }
   .dark .grid-backdrop {
     --grid-line: rgb(255 255 255 / 0.06);
+  }
+}
+
+/*
+ * Print stylesheet — this site is a resume alternative, so someone printing
+ * or "Save as PDF"-ing it should get a clean, ink-friendly document: no nav,
+ * no buttons/gated forms (nothing on paper is clickable), no decorative
+ * background, and light-mode colors regardless of the on-screen theme.
+ *
+ * This lives OUTSIDE any @layer (unlike everything else in this file) —
+ * per the CSS cascade-layers spec, unlayered rules always beat layered ones
+ * regardless of source order or specificity, which is exactly what a print
+ * override needs: it must reliably win over both Tailwind's utilities layer
+ * and the .btn-primary/.btn-secondary/.icon-btn component classes above,
+ * without needing !important.
+ * (This is the same layering behavior that caused the hamburger-menu bug
+ * fixed earlier — see the note above `@layer components`.)
+ */
+@media print {
+  header,
+  footer,
+  .btn-primary,
+  .btn-secondary,
+  .icon-btn,
+  [role="dialog"] {
+    display: none;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .aurora-blob,
+  .grid-backdrop {
+    display: none;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .section-py {
+    padding-block: 1.25rem;
   }
 }

@@ -5,7 +5,7 @@ import { Reveal } from "../Reveal";
 import { contactForm, profile } from "../../data/content";
 
 export function Contact() {
-  const { phone, linkedin, github } = profile.socialLinks;
+  const { email, phone, linkedin, github } = profile.socialLinks;
   const { web3formsAccessKey } = contactForm;
   const hasContactInfo = Boolean(web3formsAccessKey || phone || linkedin || github);
 
@@ -63,6 +63,23 @@ export function Contact() {
             <p className="mt-8 inline-block rounded-full border border-dashed border-ink-300 px-5 py-3 font-mono text-xs text-ink-500 dark:border-ink-700 dark:text-ink-400">
               Contact details coming soon — add them in{" "}
               <code>src/data/content.ts</code>
+            </p>
+          )}
+
+          {/*
+            Print-only fallback: every contact option above is gated behind
+            interactive JS (a reveal form, a reason picker) that can't work
+            on paper. A printed "resume" with a blank Contact section isn't
+            useful, so show plain email/LinkedIn text here instead — hidden
+            on screen, shown only when printing/"Save as PDF". Reaching
+            someone who already has the physical page in hand isn't the
+            scraping/harvesting risk the on-screen gates protect against.
+          */}
+          {(email || linkedin) && (
+            <p className="mt-6 hidden font-mono text-sm text-black print:block">
+              {email}
+              {email && linkedin ? " · " : ""}
+              {linkedin}
             </p>
           )}
         </Reveal>

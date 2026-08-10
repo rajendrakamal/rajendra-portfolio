@@ -166,6 +166,37 @@ px values, so nothing should visually break between these ranges.
 - Set `base: '/'` in `vite.config.ts` (both platforms serve from the domain
   root, unlike GitHub Pages project sites).
 
+## Icons
+
+`public/favicon.svg` is the source of truth (an "RD" monogram). The PNG
+variants next to it (`apple-touch-icon.png`, `favicon-32x32.png`,
+`favicon-16x16.png`, `icon-192.png`, `icon-512.png`, referenced from
+`index.html` and `site.webmanifest`) are rasterized copies — regenerate them
+if `favicon.svg` ever changes:
+
+```bash
+npm install --no-save sharp
+node -e "
+const sharp = require('sharp');
+const fs = require('fs');
+const svg = fs.readFileSync('public/favicon.svg');
+const sizes = [
+  ['public/apple-touch-icon.png', 180],
+  ['public/icon-192.png', 192],
+  ['public/icon-512.png', 512],
+  ['public/favicon-32x32.png', 32],
+  ['public/favicon-16x16.png', 16],
+];
+Promise.all(sizes.map(([out, size]) =>
+  sharp(svg, { density: 384 }).resize(size, size).png().toFile(out)
+)).then(() => console.log('done'));
+"
+```
+
+`--no-save` keeps `sharp` (a native-binary image library, only needed for
+this one-off regeneration) out of `package.json` — it's not a runtime
+dependency of the site itself.
+
 ## Analytics
 
 Pageviews and key visitor actions are tracked with
