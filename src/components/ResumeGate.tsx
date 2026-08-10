@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, FileDown, X } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import { trackEvent } from "../lib/analytics";
 import { contactForm } from "../data/content";
 
 type ResumeGateProps = {
@@ -67,6 +68,7 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
 
     setError("");
     setUnlocked(true);
+    trackEvent("resume-download");
 
     const { web3formsAccessKey } = contactForm;
     if (web3formsAccessKey) {

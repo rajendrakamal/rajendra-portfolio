@@ -1,6 +1,7 @@
 import { Check, Copy, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
+import { trackEvent } from "../lib/analytics";
 
 type PhoneRevealProps = {
   phone: string;
@@ -85,6 +86,7 @@ export function PhoneReveal({ phone, className = "" }: PhoneRevealProps) {
                 onClick={() => {
                   setReason(r);
                   setOpen(false);
+                  trackEvent(`phone-reveal:${r}`);
                 }}
                 className="rounded-lg px-2.5 py-1.5 text-left text-sm text-ink-700 transition-colors hover:bg-accent-50 hover:text-accent-700 dark:text-ink-200 dark:hover:bg-accent-900/30 dark:hover:text-accent-300"
               >

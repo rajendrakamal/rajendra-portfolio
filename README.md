@@ -166,6 +166,25 @@ px values, so nothing should visually break between these ranges.
 - Set `base: '/'` in `vite.config.ts` (both platforms serve from the domain
   root, unlike GitHub Pages project sites).
 
+## Analytics
+
+Pageviews and key visitor actions are tracked with
+[GoatCounter](https://www.goatcounter.com/) — no cookies, no consent banner
+needed, dashboard at `https://rajendradharanikota.goatcounter.com`.
+
+- **Pageviews** are tracked automatically by the script tag at the bottom of
+  `index.html`. It skips localhost by design, so local dev doesn't pollute
+  the dashboard.
+- **Custom events** are sent via `trackEvent(name)` in `src/lib/analytics.ts`,
+  currently wired up for: resume downloads (`ResumeGate.tsx`), contact form
+  submissions (`ContactMessageForm.tsx`), phone-number reveals — tagged with
+  the reason given (`PhoneReveal.tsx`), and project Live/Code link clicks
+  (`Projects.tsx`). They show up in the GoatCounter dashboard under "Pages"
+  alongside real page paths.
+- **To track a new action**, import `trackEvent` from `src/lib/analytics.ts`
+  and call it (e.g. `trackEvent("linkedin-click")`) at the moment the action
+  happens — see the existing call sites for the pattern.
+
 ## SEO / search presence
 
 **Already in place (no action needed):**

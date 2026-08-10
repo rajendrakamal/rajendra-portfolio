@@ -1,5 +1,6 @@
 import { Mail, Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import { trackEvent } from "../lib/analytics";
 
 type ContactMessageFormProps = {
   accessKey: string;
@@ -43,6 +44,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
       if (result.success) {
         setStatus("success");
         form.reset();
+        trackEvent("contact-form-submit");
       } else {
         setStatus("error");
       }

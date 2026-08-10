@@ -1,6 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import { GithubIcon } from "../icons/BrandIcons";
 import { Reveal } from "../Reveal";
+import { trackEvent } from "../../lib/analytics";
 import { projects } from "../../data/content";
 
 export function Projects() {
@@ -54,6 +55,7 @@ export function Projects() {
                         href={project.link}
                         target="_blank"
                         rel="noreferrer noopener"
+                        onClick={() => trackEvent(`project-link:${project.title}:live`)}
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 hover:underline dark:text-ink-50"
                       >
                         <ExternalLink className="size-3.5" />
@@ -65,6 +67,7 @@ export function Projects() {
                         href={project.repo}
                         target="_blank"
                         rel="noreferrer noopener"
+                        onClick={() => trackEvent(`project-link:${project.title}:code`)}
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 hover:underline dark:text-ink-50"
                       >
                         <GithubIcon className="size-3.5" />
