@@ -125,14 +125,15 @@
       }
     </script>
 
-    <!-- Applies the saved theme before React mounts, avoiding a light/dark flash. -->
+    <!--
+      Applies the saved theme before React mounts, avoiding a light/dark
+      flash. Defaults to light regardless of OS preference — only an
+      explicit stored choice (from clicking the toggle) turns dark mode on.
+    -->
     <script>
       (function () {
         var stored = localStorage.getItem("portfolio-theme");
-        var prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        if (stored === "dark" || (!stored && prefersDark)) {
+        if (stored === "dark") {
           document.documentElement.classList.add("dark");
         }
       })();

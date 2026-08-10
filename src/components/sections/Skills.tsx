@@ -1,10 +1,10 @@
-import { Database, LayoutDashboard, TrendingUp } from "lucide-react";
+import { Database, LayoutDashboard, TrendingUp, Users } from "lucide-react";
 import { Reveal } from "../Reveal";
 import { ServiceCard } from "../ServiceCard";
 import { skillGroups } from "../../data/content";
 
 /** One icon per skill category, in the same order as content.ts's skillGroups. */
-const ICONS = [LayoutDashboard, TrendingUp, Database];
+const ICONS = [LayoutDashboard, TrendingUp, Database, Users];
 
 export function Skills() {
   return (
@@ -18,7 +18,7 @@ export function Skills() {
           <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">Where I add the most value</h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {skillGroups.map((group, i) => (
             <ServiceCard
               key={group.category}

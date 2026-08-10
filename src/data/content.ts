@@ -105,12 +105,13 @@ export const skillGroups: SkillGroup[] = [
       "SQL",
       "PostgreSQL",
       "Python",
-      "SparkSQL",
+      "Spark",
       "Tableau",
       "Power BI",
       "Looker",
       "dbt",
       "Airflow",
+      "Excel",
     ],
   },
   {
@@ -147,6 +148,19 @@ export const skillGroups: SkillGroup[] = [
       "Root Cause Analysis",
       "Dashboard Development",
       "Reporting Automation",
+    ],
+  },
+  {
+    category: "Business & Cross-Functional Skills",
+    description:
+      "I bring the analysis into the room — partnering with leadership and cross-functional teams, translating findings into decisions, and mentoring the analysts around me.",
+    skills: [
+      "Cross-Functional Stakeholder Management",
+      "Executive Communication",
+      "Business Intelligence",
+      "Analytical Problem Solving",
+      "Mentoring",
+      "Portfolio Management",
     ],
   },
 ];
