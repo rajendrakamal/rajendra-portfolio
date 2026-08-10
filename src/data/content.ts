@@ -74,7 +74,7 @@ export const profile: Profile = {
     // TODO: fill phone in when you're ready to publish it.
     email: "d.rajendrakamal4095@gmail.com",
     phone: "",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/rajendra-dharanikota-m-eng-865389171/",
     github: "",
     resumeUrl: "Rajendra-Dharanikota-Resume.pdf",
   },

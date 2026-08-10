@@ -4,13 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#16735c" />
+    <meta name="theme-color" content="#1c1a17" />
     <meta
       name="description"
       content="Rajendra Dharanikota — Strategic Data Analyst specializing in revenue analytics, pricing strategy, and executive reporting."
     />
 
+    <!--
+      SEO note: this is a client-rendered React app, so this static HTML
+      (title/description/OG/Twitter/JSON-LD) is what search engines, link
+      unfurlers (LinkedIn, Slack, iMessage), and crawlers that don't execute
+      JS will see first — keep it accurate even though App.tsx also sets
+      document.title at runtime. Update these alongside profile.name /
+      profile.role in src/data/content.ts if either ever changes, and swap
+      /og-image.jpg (currently the headshot) for a designed 1200×630 banner
+      if you want a richer link-preview card later.
+    -->
+    <link rel="canonical" href="https://rajendrakamal.github.io/rajendra-portfolio/" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rajendrakamal.github.io/rajendra-portfolio/" />
     <meta
       property="og:title"
       content="Rajendra Dharanikota — Strategic Data Analyst"
@@ -19,6 +32,15 @@
       property="og:description"
       content="Revenue analytics, pricing strategy, and executive reporting — selected projects and experience."
     />
+    <meta property="og:image" content="https://rajendrakamal.github.io/rajendra-portfolio/og-image.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rajendra Dharanikota — Strategic Data Analyst" />
+    <meta
+      name="twitter:description"
+      content="Revenue analytics, pricing strategy, and executive reporting — selected projects and experience."
+    />
+    <meta name="twitter:image" content="https://rajendrakamal.github.io/rajendra-portfolio/og-image.jpg" />
 
     <!--
       Kept in sync with `profile.name`/`profile.role` in src/data/content.ts —
@@ -26,6 +48,35 @@
       App.tsx also sets document.title at runtime from the same source.
     -->
     <title>Rajendra Dharanikota — Strategic Data Analyst</title>
+
+    <!--
+      JSON-LD structured data (schema.org Person) — helps Google associate
+      this page with the person/role/employer, and is what a knowledge-panel
+      or rich-result pull from. Keep in sync with content.ts: profile.name,
+      profile.role, socialLinks.linkedin, experience[0].company (current
+      employer), and education[0].school.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rajendra Dharanikota",
+        "jobTitle": "Strategic Data Analyst",
+        "url": "https://rajendrakamal.github.io/rajendra-portfolio/",
+        "image": "https://rajendrakamal.github.io/rajendra-portfolio/og-image.jpg",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "CARFAX Inc."
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Western Ontario"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/rajendra-dharanikota-m-eng-865389171/"
+        ]
+      }
+    </script>
 
     <!-- Applies the saved theme before React mounts, avoiding a light/dark flash. -->
     <script>

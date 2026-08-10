@@ -1,5 +1,7 @@
 # Portfolio Site
 
+**Live:** https://rajendrakamal.github.io/rajendra-portfolio/
+
 A personal portfolio site — an alternative to a static resume — built with
 React, TypeScript, Tailwind CSS, and Framer Motion.
 
@@ -92,19 +94,26 @@ in `src/index.css` — components reference these tokens through Tailwind
 classes (e.g. `bg-accent-600`, `text-ink-900`) and never hardcode a hex value,
 so re-theming means editing `index.css` only, not hunting through components.
 
-**Color system** (`@theme` block, top of `index.css`):
+**Color system** (`@theme` block, top of `index.css`) — deliberately
+monochrome, matching the current design direction (confident black/cream, no
+brand hue):
 
-- `--color-accent-*` — the single confident brand color (currently a muted
-  teal, `#2f8577`). **To change the accent color site-wide, edit only this
-  10-step scale.** Every button, link, active nav state, focus ring, and
-  chart/progress bar references `accent-*` tokens.
-- `--color-ink-*` — one neutral ramp used by *both* themes: warm cream at the
+- `--color-ink-*` — the *only* color scale on the site: warm cream at the
   light end (`ink-50`–`ink-200`, the light-mode background/surface color) and
-  deep navy/slate at the dark end (`ink-700`–`ink-950`, the dark-mode
+  near-black warm charcoal at the dark end (`ink-800`–`ink-950`, the dark-mode
   background). `bg-ink-50` in light mode and `text-ink-50` in dark mode use
   the same token — see the comment block above `@theme` in `index.css` for
-  the full explanation of why one ramp serves both themes. All text/background
-  pairings have been checked for WCAG AA contrast (4.5:1+) in both themes.
+  the full explanation of why one ramp serves both themes. Buttons/badges that
+  need to flip between "dark chip on light page" and "light chip on dark
+  page" (e.g. `.btn-primary`) use `ink-900 ... dark:ink-50` pairs directly —
+  that inversion, not a fixed hue, is what reads as the site's "accent."
+- `--color-accent-*` — kept as a token for architectural flexibility, but its
+  values are set identical to the matching `ink-*` step, so any existing
+  `bg-accent-*`/`text-accent-*` class already renders as neutral grey. **To
+  reintroduce a color accent, give this scale its own values again** — every
+  component using it will pick up the change automatically.
+- All text/background pairings have been checked for WCAG AA contrast
+  (4.5:1+) in both themes.
 
 **Type scale**: `--text-h1` / `--text-h2` / `--text-h3` / `--text-lead` (just
 above `@layer base` in `index.css`) are `clamp()`-based fluid sizes following
@@ -156,6 +165,43 @@ px values, so nothing should visually break between these ranges.
 - Build command: `npm run build` — Output directory: `dist`.
 - Set `base: '/'` in `vite.config.ts` (both platforms serve from the domain
   root, unlike GitHub Pages project sites).
+
+## SEO / search presence
+
+**Already in place (no action needed):**
+
+- `index.html` has a real `<title>`/description, canonical URL, Open Graph +
+  Twitter Card tags (so links shared on LinkedIn/Slack/iMessage show a
+  preview card), and a `schema.org` `Person` JSON-LD block (helps Google
+  associate the page with you, your role, employer, and LinkedIn). All of
+  this is static HTML — it renders before React does, so it's visible to
+  crawlers that don't execute JavaScript.
+- `public/og-image.jpg` is the preview-card image (currently your headshot —
+  swap it for a designed 1200×630 banner any time for a richer card, no code
+  change needed, same filename).
+- `public/robots.txt` and `public/sitemap.xml` allow crawling and point at
+  the one page.
+- Keep the JSON-LD block in `index.html` in sync with `profile.name`,
+  `profile.role`, `socialLinks.linkedin`, the current employer
+  (`experience[0].company`), and school (`education[0].school`) in
+  `content.ts` if any of those change.
+
+**Needs your action (things I can't do for you):**
+
+1. **Submit to search engines** — the single highest-leverage step. Add the
+   site in [Google Search Console](https://search.google.com/search-console)
+   and [Bing Webmaster Tools](https://www.bing.com/webmasters), verify
+   ownership (both support a DNS or HTML-file method), and submit
+   `sitemap.xml`. Without this, discovery can take weeks; with it, often days.
+2. **Get backlinks from sites that already rank** — link to the portfolio
+   from your LinkedIn profile (headline, "Featured" section, or contact
+   info), your GitHub profile README if you make one public, and your email
+   signature. A link from an established, indexed domain (linkedin.com,
+   github.com) does more for a brand-new site's ranking than any on-page tweak.
+3. **Optional: a custom domain** (e.g. `rajendradharanikota.com`) reads more
+   professionally than a `github.io` subpath and is easy to point at GitHub
+   Pages via a `CNAME` file, but isn't required for indexing — treat it as a
+   nice-to-have once the basics above are done.
 
 ## Old resume/assets
 
