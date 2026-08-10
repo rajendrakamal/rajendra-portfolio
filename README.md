@@ -6,7 +6,8 @@ A personal portfolio site — an alternative to a static resume — built with
 React, TypeScript, Tailwind CSS, and Framer Motion.
 
 Live sections: Hero, At a Glance, About, What I Do, My Analytics Process,
-Experience (timeline), Projects, Education, Testimonials, Contact.
+Experience (timeline), Projects, Education, Testimonials, Contact — plus a
+[Markdown-based blog](#blog).
 
 ## Quick start
 
@@ -45,6 +46,14 @@ src/
   hooks/
     useTheme.ts          ← dark/light mode, persisted to localStorage
     useActiveSection.ts  ← highlights the nav link for the section in view
+  pages/
+    HomePage.tsx         ← everything above, at route "/"
+    BlogIndexPage.tsx    ← post list, at route "/blog"
+    BlogPostPage.tsx     ← one post, at route "/blog/:slug"
+  content/posts/*.md     ← blog posts — see "Blog" below
+  lib/
+    posts.ts             ← loads + parses every post in content/posts/
+    analytics.ts         ← GoatCounter custom-event helper
   index.css           ← design tokens (colors, fonts, type scale) + global styles
 ```
 
@@ -86,6 +95,55 @@ you add or remove a whole *section*, not for everyday text changes.
 `contactForm.web3formsAccessKey` is a temporary preview key — swap it for a
 real key from web3forms.com before publishing so the contact/resume-request
 forms actually deliver messages (see the comment above that export).
+
+## Blog
+
+The blog is a set of Markdown files, not a CMS — there's no database, no
+admin login, no third-party service. **To publish a new post:**
+
+1. Add a new file to `src/content/posts/`, named however you like (the
+   filename becomes the post's URL slug), e.g.
+   `src/content/posts/2026-09-01-my-new-post.md`.
+2. Give it frontmatter + a body:
+
+   ```markdown
+   ---
+   title: My New Post
+   date: 2026-09-01
+   excerpt: One or two sentences shown on the blog index card.
+   tags: [Optional, Tags, Here]
+   ---
+
+   Write the post here in normal Markdown — **bold**, *italic*,
+   [links](https://example.com), lists, and code blocks all work.
+
+   ![An image](./my-image.png)
+   ```
+
+3. `git add`, `git commit`, `git push` — same as any other change. The site
+   rebuilds automatically (see Deploying below) and the post appears on
+   `/blog`, newest first, no other file needs to change.
+
+**Adding images:** put the image file next to the post (or anywhere under
+`src/`) and reference it with a relative Markdown path as above — Vite
+bundles it automatically. For an image that doesn't belong to one specific
+post, put it in `public/` instead and reference it as `/your-image.png`.
+
+**How it works, if you're curious:** `src/lib/posts.ts` uses Vite's
+`import.meta.glob` to load every file in `src/content/posts/` at build
+time and parse its frontmatter — there's a comment at the top of that file
+explaining the exact format. `BlogPostPage.tsx` renders the Markdown body
+with `react-markdown`, styled via Tailwind's `@tailwindcss/typography`
+plugin (the `prose`/`dark:prose-invert` classes) so it automatically follows
+the site's fonts and light/dark colors.
+
+**Routing note:** GitHub Pages has no server-side router, so a direct visit
+or hard refresh on `/blog/some-post` would 404 without help. `public/404.html`
+and a small inline script in `index.html` work together to redirect that
+back through `index.html` with the intended path preserved (a well-known
+pattern: [rafgraph/spa-github-pages](https://github.com/rafgraph/spa-github-pages)).
+This is already set up and shouldn't need touching — it's documented here in
+case a 404 ever looks suspicious while debugging something else.
 
 ## Re-theming
 

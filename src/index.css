@@ -2,6 +2,12 @@
    — see the comment there for why a CSS @import is worse for performance. */
 @import "tailwindcss";
 
+/* Styles Markdown blog post bodies (headings, links, lists, images, code,
+   blockquotes) via the `prose` / `dark:prose-invert` classes — see
+   BlogPostPage.tsx. Neutral grayscale palette already matches the site's
+   monochrome design without extra customization. */
+@plugin "@tailwindcss/typography";
+
 /* ---------------------------------------------------------------------- */
 /* Design tokens                                                          */
 /* Change these to re-theme the entire site (colors, fonts, radii).       */
@@ -287,5 +293,26 @@
 
   .section-py {
     padding-block: 1.25rem;
+  }
+
+  /* Blog post bodies (.prose, from @tailwindcss/typography) set their own
+     text colors via CSS custom properties scoped to the element itself —
+     the html/body override above doesn't reach them. Without this, printing
+     a post while dark mode is active on-screen would still render light
+     prose text, unreadable on white paper. */
+  .prose {
+    --tw-prose-body: #000;
+    --tw-prose-headings: #000;
+    --tw-prose-lead: #000;
+    --tw-prose-links: #000;
+    --tw-prose-bold: #000;
+    --tw-prose-counters: #000;
+    --tw-prose-bullets: #000;
+    --tw-prose-hr: #000;
+    --tw-prose-quotes: #000;
+    --tw-prose-quote-borders: #000;
+    --tw-prose-code: #000;
+    --tw-prose-pre-code: #000;
+    --tw-prose-pre-bg: transparent;
   }
 }

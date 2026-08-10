@@ -1,4 +1,5 @@
 import { ArrowUp, Mail, Phone } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { contactForm, profile } from "../data/content";
 
@@ -6,6 +7,19 @@ export function Footer() {
   const { phone, linkedin, github } = profile.socialLinks;
   const { web3formsAccessKey } = contactForm;
   const year = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // The Contact section only exists on the home page — from any other
+  // route (e.g. /blog), navigate there first and let HomePage's own effect
+  // scroll to it once mounted, same pattern as Navbar's section links.
+  const goToContact = () => {
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: "contact" } });
+      return;
+    }
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <footer className="border-t border-ink-200/70 dark:border-ink-800/70">
@@ -16,24 +30,26 @@ export function Footer() {
 
         <div className="flex items-center gap-3">
           {web3formsAccessKey && (
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={goToContact}
               aria-label="Email — send a message from the contact section"
               title="Send a message from the contact section"
               className="icon-btn"
             >
               <Mail className="size-4" />
-            </a>
+            </button>
           )}
           {phone && (
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={goToContact}
               aria-label="Phone — request in the contact section"
               title="Request phone number in the contact section"
               className="icon-btn"
             >
               <Phone className="size-4" />
-            </a>
+            </button>
           )}
           {linkedin && (
             <a

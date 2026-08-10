@@ -1,37 +1,43 @@
-import { useEffect } from "react";
+import { Suspense, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { Hero } from "./components/sections/Hero";
-import { AtAGlance } from "./components/sections/AtAGlance";
-import { About } from "./components/sections/About";
-import { Skills } from "./components/sections/Skills";
-import { AnalyticsProcess } from "./components/sections/AnalyticsProcess";
-import { Experience } from "./components/sections/Experience";
-import { Projects } from "./components/sections/Projects";
-import { Education } from "./components/sections/Education";
-import { Testimonials } from "./components/sections/Testimonials";
-import { Contact } from "./components/sections/Contact";
-import { profile } from "./data/content";
+import { HomePage } from "./pages/HomePage";
+
+// Code-split the blog routes: react-markdown + remark-gfm are only needed
+// there, and most visitors (recruiters landing on the portfolio) never hit
+// them — lazy-loading keeps that weight out of the home page's bundle.
+const BlogIndexPage = lazy(() =>
+  import("./pages/BlogIndexPage").then((m) => ({ default: m.BlogIndexPage })),
+);
+const BlogPostPage = lazy(() =>
+  import("./pages/BlogPostPage").then((m) => ({ default: m.BlogPostPage })),
+);
 
 function App() {
-  useEffect(() => {
-    document.title = `${profile.name} — ${profile.role}`;
-  }, []);
-
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
-        <AtAGlance />
-        <About />
-        <Skills />
-        <AnalyticsProcess />
-        <Experience />
-        <Projects />
-        <Education />
-        <Testimonials />
-        <Contact />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={null}>
+                <BlogIndexPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={null}>
+                <BlogPostPage />
+              </Suspense>
+            }
+          />
+        </Routes>
       </main>
       <Footer />
     </>
