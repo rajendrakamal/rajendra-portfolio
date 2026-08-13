@@ -7,6 +7,7 @@ import { Skills } from "../components/sections/Skills";
 import { AnalyticsProcess } from "../components/sections/AnalyticsProcess";
 import { Experience } from "../components/sections/Experience";
 import { Projects } from "../components/sections/Projects";
+import { BlogTeaser } from "../components/sections/BlogTeaser";
 import { Education } from "../components/sections/Education";
 import { Testimonials } from "../components/sections/Testimonials";
 import { Contact } from "../components/sections/Contact";
@@ -41,6 +42,7 @@ export function HomePage() {
       <AnalyticsProcess />
       <Experience />
       <Projects />
+      <BlogTeaser />
       <Education />
       <Testimonials />
       <Contact />
