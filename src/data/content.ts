@@ -59,13 +59,13 @@ export type EducationEntry = {
 
 export const profile: Profile = {
   name: "Rajendra Dharanikota",
-  role: "Strategic Data Analyst",
+  role: "Data Analyst & Analytics Engineer",
   tagline:
     "I turn large, messy datasets into clear insights and dashboards that leadership teams trust and act on.",
   location: "Ontario, Canada",
-  availability: "Open to Senior / Lead Data Analyst roles",
+  availability: "Open to Senior / Lead Data Analyst & Analytics Engineer roles",
   summary: [
-    "Strategic Data Analyst with 7+ years of experience driving revenue analytics, customer retention, pricing strategy, and business performance across subscription-based and analytics-driven environments.",
+    "Data Analyst and Analytics Engineer with 7+ years of experience driving revenue analytics, customer retention, pricing strategy, and business performance across subscription-based and analytics-driven environments.",
     "Proven track record developing scalable analytical frameworks, KPI reporting systems, and executive dashboards that support revenue growth, customer lifecycle optimization, forecasting, and strategic decision making.",
     "Advanced expertise in SQL, Python, Tableau, and SparkSQL, with strong experience analyzing large-scale customer, operational, financial, and product usage datasets to generate actionable business insights.",
     "Strong analytical storyteller — I translate complex data into compelling narratives, scalable reporting solutions, and measurable business outcomes.",
