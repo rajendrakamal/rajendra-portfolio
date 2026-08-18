@@ -1,6 +1,6 @@
 ---
 title: Experimentation Is a Program, Not a Single Test
-date: 2026-08-13
+date: 2026-08-18
 excerpt: Running one A/B test is a Tuesday afternoon. Running experimentation as a discipline, where dozens of tests overlap and half of your ideas can't actually be randomized, is a different problem entirely.
 tags: [Experimentation, A/B Testing, Analytics]
 ---

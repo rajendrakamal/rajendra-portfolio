@@ -1,6 +1,6 @@
 ---
 title: A/B Testing in Practice: What Actually Trips People Up
-date: 2026-08-13
+date: 2026-08-18
 excerpt: The math behind a t-test is the easy part. Almost every A/B test that goes wrong goes wrong somewhere else, usually before the test even starts or in the week someone gets impatient and checks the dashboard too early.
 tags: [A/B Testing, Statistics, Experimentation]
 ---
