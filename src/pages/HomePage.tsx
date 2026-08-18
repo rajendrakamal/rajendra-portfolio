@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { trackPageview } from "../lib/analytics";
 import { Hero } from "../components/sections/Hero";
 import { AtAGlance } from "../components/sections/AtAGlance";
 import { About } from "../components/sections/About";
@@ -20,6 +21,10 @@ export function HomePage() {
 
   useEffect(() => {
     document.title = `${profile.name} — ${profile.role}`;
+    // Fired here (not a route-level effect) so document.title is always
+    // correct by the time GoatCounter reads it — see BlogIndexPage.tsx and
+    // BlogPostPage.tsx, which do the same for their own routes.
+    trackPageview("/", document.title);
   }, []);
 
   // When Navbar sends someone here from a different route (e.g. clicking

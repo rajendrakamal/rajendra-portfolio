@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { Reveal } from "../components/Reveal";
 import { BlogPostCard } from "../components/BlogPostCard";
+import { trackPageview } from "../lib/analytics";
 import { posts } from "../lib/posts";
 import { profile } from "../data/content";
 
 export function BlogIndexPage() {
   useEffect(() => {
     document.title = `Blog — ${profile.name}`;
+    // See HomePage.tsx's matching effect for why this is tracked here
+    // rather than from a shared route-level component.
+    trackPageview("/blog", document.title);
   }, []);
 
   return (

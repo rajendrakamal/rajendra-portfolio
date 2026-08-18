@@ -2,6 +2,7 @@ import { GithubIcon, LinkedinIcon } from "../icons/BrandIcons";
 import { ContactMessageForm } from "../ContactMessageForm";
 import { PhoneReveal } from "../PhoneReveal";
 import { Reveal } from "../Reveal";
+import { trackEvent } from "../../lib/analytics";
 import { contactForm, profile } from "../../data/content";
 
 export function Contact() {
@@ -32,6 +33,7 @@ export function Contact() {
                   href={linkedin}
                   target="_blank"
                   rel="noreferrer noopener"
+                  onClick={() => trackEvent("social-link:linkedin:contact")}
                   className="btn-secondary"
                 >
                   <LinkedinIcon className="size-4" />
@@ -43,6 +45,7 @@ export function Contact() {
                   href={github}
                   target="_blank"
                   rel="noreferrer noopener"
+                  onClick={() => trackEvent("social-link:github:contact")}
                   className="btn-secondary"
                 >
                   <GithubIcon className="size-4" />

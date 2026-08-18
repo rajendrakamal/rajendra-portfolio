@@ -145,15 +145,22 @@
 
     <!--
       GoatCounter — privacy-friendly analytics (no cookies, no consent
-      banner needed). Pageviews are tracked automatically by this script;
-      custom events (resume downloads, contact form submits, phone reveals,
-      project link clicks) are sent from src/lib/analytics.ts. GoatCounter
-      skips counting requests from localhost by default, so local dev
-      doesn't pollute the dashboard. Dashboard:
-      https://rajendradharanikota.goatcounter.com
+      banner needed). `no_onload: true` stops this script from counting the
+      page it lands on automatically — this site is a client-side-routed
+      SPA, so each page (HomePage.tsx, BlogIndexPage.tsx, BlogPostPage.tsx)
+      calls trackPageview() itself, from the same effect that sets
+      document.title, on both the initial load and every in-app navigation
+      (e.g. clicking into a blog post). Without that override, only ever
+      the very first page a visitor lands on would get counted. Custom
+      events (resume downloads, contact form submits, phone reveals,
+      project/social link clicks) are sent from src/lib/analytics.ts.
+      GoatCounter skips counting requests from localhost by default, so
+      local dev doesn't pollute the dashboard.
+      Dashboard: https://rajendradharanikota.goatcounter.com
     -->
     <script
       data-goatcounter="https://rajendradharanikota.goatcounter.com/count"
+      data-goatcounter-settings='{"no_onload": true}'
       async
       src="//gc.zgo.at/count.js"
     ></script>

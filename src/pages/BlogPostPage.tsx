@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Reveal } from "../components/Reveal";
+import { trackPageview } from "../lib/analytics";
 import { getPostBySlug } from "../lib/posts";
 import { profile } from "../data/content";
 
@@ -35,7 +36,11 @@ export function BlogPostPage() {
   const post = slug ? getPostBySlug(slug) : undefined;
 
   useEffect(() => {
-    if (post) document.title = `${post.title} — ${profile.name}`;
+    if (!post) return;
+    document.title = `${post.title} — ${profile.name}`;
+    // See HomePage.tsx's matching effect for why this is tracked here
+    // rather than from a shared route-level component.
+    trackPageview(`/blog/${post.slug}`, document.title);
   }, [post]);
 
   if (!post) {

@@ -1,6 +1,7 @@
 import { ArrowUp, Mail, Phone } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
+import { trackEvent } from "../lib/analytics";
 import { contactForm, profile } from "../data/content";
 
 export function Footer() {
@@ -56,6 +57,7 @@ export function Footer() {
               href={linkedin}
               target="_blank"
               rel="noreferrer noopener"
+              onClick={() => trackEvent("social-link:linkedin:footer")}
               aria-label="LinkedIn"
               className="icon-btn"
             >
@@ -67,6 +69,7 @@ export function Footer() {
               href={github}
               target="_blank"
               rel="noreferrer noopener"
+              onClick={() => trackEvent("social-link:github:footer")}
               aria-label="GitHub"
               className="icon-btn"
             >
