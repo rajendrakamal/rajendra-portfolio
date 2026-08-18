@@ -265,6 +265,12 @@ export const education: EducationEntry[] = [
     field: "Data Science (Software Engineering specialization)",
     period: "",
   },
+  {
+    school: "K L University",
+    credential: "Bachelor of Technology",
+    field: "Electrical & Computer Engineering",
+    period: "",
+  },
 ];
 
 export type ProcessStep = {
