@@ -16,7 +16,12 @@ export function Experience() {
 
           <ol className="space-y-10">
             {experience.map((job, i) => (
-              <TimelineItem key={`${job.company}-${job.start}`} job={job} delay={i * 0.06} />
+              <TimelineItem
+                key={`${job.company}-${job.start}`}
+                job={job}
+                delay={i * 0.06}
+                defaultOpen={i === 0}
+              />
             ))}
           </ol>
         </div>

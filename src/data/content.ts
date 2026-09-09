@@ -167,11 +167,22 @@ export const skillGroups: SkillGroup[] = [
 
 export const experience: ExperienceEntry[] = [
   {
+    // TODO: confirm exact start date once this one is officially underway —
+    // set here as "Sep 2026" only because that's when the CARFAX role below
+    // ends; adjust if the actual start date differs.
+    role: "Senior Data Analyst",
+    company: "Ciklum (Client: GoodRx)",
+    location: "",
+    start: "Sep 2026",
+    end: "Upcoming",
+    highlights: [],
+  },
+  {
     role: "Sr. Pricing Strategy & Data Analyst",
     company: "CARFAX Inc.",
     location: "Remote",
     start: "Oct 2022",
-    end: "Present",
+    end: "Sep 2026",
     highlights: [
       "Led strategic analytics initiatives across 3 core B2B subscription products contributing ~80% of company revenue, supporting pricing strategy, retention optimization, forecasting, and executive decision making.",
       "Built customer retention and revenue-risk scoring frameworks that improved retention prediction accuracy by 5%, enabling proactive customer preservation and expansion strategies.",
