@@ -90,6 +90,27 @@ Everything text-based lives in **`src/data/content.ts`**:
 Nav bar links live separately in `src/data/navigation.ts` — only edit this if
 you add or remove a whole *section*, not for everyday text changes.
 
+### Bilingual content (English / French)
+
+The site has an EN/FR toggle (top-right, next to the theme toggle). Most text
+fields in `content.ts` are **`Localized`** — `{ en: "...", fr: "..." }` —
+instead of a plain string. When you add a new entry to any array (a new job,
+project, etc.), fill in both `en` and `fr` for every `Localized` field;
+TypeScript errors if either is missing, so it's hard to forget. Short
+technical skill/tag chips (SQL, Tableau, "Cohort Analysis", …) are
+deliberately plain strings, not `Localized` — those stay English in both
+languages, matching how they're actually used on French-language tech
+résumés and job postings.
+
+Fixed UI labels (button text, form fields, section headings — anything that
+isn't part of the content data above) live separately in
+**`src/i18n/strings.ts`**, with the same `en`/`fr` shape. See that file's
+top comment for how to add a new one.
+
+The language choice is saved to `localStorage` (same pattern as the
+dark/light toggle) and falls back to the visitor's browser language on their
+first visit if they've never chosen explicitly.
+
 **Contact details status:** name and email are set; `phone` is still empty
 (the phone-reveal button in Contact just won't render until you add one), and
 `contactForm.web3formsAccessKey` is a temporary preview key — swap it for a
@@ -123,6 +144,13 @@ admin login, no third-party service. **To publish a new post:**
 3. `git add`, `git commit`, `git push` — same as any other change. The site
    rebuilds automatically (see Deploying below) and the post appears on
    `/blog`, newest first, no other file needs to change.
+
+**Adding a French translation:** create a second file with the same name
+plus a `.fr.md` suffix right before `.md` — e.g. `2026-09-01-my-new-post.md`
++ `2026-09-01-my-new-post.fr.md` — with its own complete frontmatter block.
+They're matched up by that shared filename. A post with no `.fr.md` file yet
+just falls back to showing its English version while the site is in French
+mode, so nothing breaks if a translation lags behind.
 
 **Adding images:** put the image file next to the post (or anywhere under
 `src/`) and reference it with a relative Markdown path as above — Vite

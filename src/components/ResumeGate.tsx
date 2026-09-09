@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Download, FileDown, X } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { trackEvent } from "../lib/analytics";
+import { useStrings } from "../i18n/strings";
 import { contactForm } from "../data/content";
 
 type ResumeGateProps = {
@@ -30,6 +31,7 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
   const [purpose, setPurpose] = useState("");
   const [error, setError] = useState("");
   const downloadRef = useRef<HTMLAnchorElement>(null);
+  const s = useStrings();
 
   useEffect(() => {
     if (!open) return;
@@ -58,11 +60,11 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
     event.preventDefault();
 
     if (!EMAIL_REGEX.test(email.trim())) {
-      setError("Enter a valid email address.");
+      setError(s.resume.errorInvalidEmail);
       return;
     }
     if (purpose.trim().length < 3) {
-      setError("Let me know what you're looking for the resume for.");
+      setError(s.resume.errorPurpose);
       return;
     }
 
@@ -93,7 +95,7 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
     <>
       <button type="button" onClick={() => setOpen(true)} className={`btn-secondary ${className}`}>
         <FileDown className="size-4" />
-        Download resume
+        {s.resume.download}
       </button>
 
       <AnimatePresence>
@@ -114,17 +116,17 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
               transition={{ duration: 0.2, ease: "easeOut" }}
               role="dialog"
               aria-modal="true"
-              aria-label="Download resume"
+              aria-label={s.resume.dialogAria}
               className="glass-card w-full max-w-md p-6"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="section-heading">Resume</p>
+                  <p className="section-heading">{s.resume.kicker}</p>
                   <h3 className="font-display mt-2 text-xl font-semibold text-ink-900 dark:text-ink-50">
-                    {unlocked ? "You're all set" : "Quick intro first"}
+                    {unlocked ? s.resume.allSet : s.resume.quickIntro}
                   </h3>
                 </div>
-                <button type="button" onClick={close} aria-label="Close" className="icon-btn shrink-0">
+                <button type="button" onClick={close} aria-label={s.contactForm.close} className="icon-btn shrink-0">
                   <X className="size-4" />
                 </button>
               </div>
@@ -132,22 +134,22 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
               {unlocked ? (
                 <div className="mt-4">
                   <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-300">
-                    Thanks — your download should have started automatically.
+                    {s.resume.thanksAutoStart}
                   </p>
                   <a ref={downloadRef} href={resolvedUrl} download className="btn-primary mt-4">
                     <Download className="size-4" />
-                    Download PDF
+                    {s.resume.downloadPdf}
                   </a>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="mt-4 space-y-4">
                   <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-300">
-                    Tell me a bit about who's asking, and the PDF is yours.
+                    {s.resume.tellMeABit}
                   </p>
 
                   <div>
                     <label htmlFor="rg-email" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-                      Email
+                      {s.resume.email}
                     </label>
                     <input
                       id="rg-email"
@@ -155,14 +157,14 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
                       required
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
-                      placeholder="you@company.com"
+                      placeholder={s.resume.emailPlaceholder}
                       className="mt-1 w-full rounded-lg border border-ink-300/70 bg-transparent px-3 py-2 text-sm text-ink-900 outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/30 dark:border-ink-700/70 dark:text-ink-50"
                     />
                   </div>
 
                   <div>
                     <label htmlFor="rg-purpose" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-                      Purpose
+                      {s.resume.purpose}
                     </label>
                     <input
                       id="rg-purpose"
@@ -170,7 +172,7 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
                       required
                       value={purpose}
                       onChange={(event) => setPurpose(event.target.value)}
-                      placeholder="e.g. Hiring for a Data Analyst role"
+                      placeholder={s.resume.purposePlaceholder}
                       className="mt-1 w-full rounded-lg border border-ink-300/70 bg-transparent px-3 py-2 text-sm text-ink-900 outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/30 dark:border-ink-700/70 dark:text-ink-50"
                     />
                   </div>
@@ -179,7 +181,7 @@ export function ResumeGate({ resumeUrl, className = "" }: ResumeGateProps) {
 
                   <button type="submit" className="btn-primary w-full justify-center">
                     <FileDown className="size-4" />
-                    Unlock download
+                    {s.resume.unlockDownload}
                   </button>
                 </form>
               )}

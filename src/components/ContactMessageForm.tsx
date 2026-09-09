@@ -1,18 +1,12 @@
 import { Mail, Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { trackEvent } from "../lib/analytics";
+import { useStrings } from "../i18n/strings";
 
 type ContactMessageFormProps = {
   accessKey: string;
   className?: string;
 };
-
-const REASONS = [
-  "Job opportunity",
-  "Consulting / freelance work",
-  "Speaking or networking",
-  "Something else",
-];
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -24,6 +18,7 @@ type Status = "idle" | "sending" | "success" | "error";
 export function ContactMessageForm({ accessKey, className = "" }: ContactMessageFormProps) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
+  const s = useStrings();
 
   if (!accessKey) return null;
 
@@ -61,7 +56,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
         className={`btn-primary ${className}`}
       >
         <Mail className="size-4" />
-        Send a message
+        {s.contactForm.sendMessage}
       </button>
     );
   }
@@ -71,11 +66,9 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
       {status === "success" ? (
         <div className="py-4 text-center">
           <p className="text-lg font-semibold text-ink-900 dark:text-ink-50">
-            Message sent — thank you!
+            {s.contactForm.messageSent}
           </p>
-          <p className="mt-2 text-sm text-ink-600 dark:text-ink-300">
-            I'll get back to you as soon as I can.
-          </p>
+          <p className="mt-2 text-sm text-ink-600 dark:text-ink-300">{s.contactForm.willReply}</p>
           <button
             type="button"
             onClick={() => {
@@ -84,7 +77,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
             }}
             className="mt-4 text-sm font-medium text-accent-600 hover:underline dark:text-accent-400"
           >
-            Close
+            {s.contactForm.close}
           </button>
         </div>
       ) : (
@@ -94,7 +87,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
 
           <div>
             <label htmlFor="cf-name" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-              Name
+              {s.contactForm.name}
             </label>
             <input
               id="cf-name"
@@ -107,7 +100,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
 
           <div>
             <label htmlFor="cf-email" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-              Your email (so I can reply)
+              {s.contactForm.yourEmail}
             </label>
             <input
               id="cf-email"
@@ -120,7 +113,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
 
           <div>
             <label htmlFor="cf-reason" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-              Reason
+              {s.contactForm.reason}
             </label>
             <select
               id="cf-reason"
@@ -130,11 +123,14 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
               className="mt-1 w-full rounded-lg border border-ink-300 bg-transparent px-3 py-2 text-sm text-ink-900 outline-none focus:border-accent-400 focus:ring-2 focus:ring-accent-400/30 dark:border-ink-700 dark:text-ink-50 dark:[color-scheme:dark]"
             >
               <option value="" disabled>
-                Select a reason
+                {s.contactForm.selectReason}
               </option>
-              {REASONS.map((reason) => (
-                <option key={reason} value={reason}>
-                  {reason}
+              {/* value stays the canonical English string (see strings.ts)
+                  so submissions/analytics stay consistent regardless of
+                  display language; only the visible label translates. */}
+              {s.contactReasons.map((reason) => (
+                <option key={reason.value} value={reason.value}>
+                  {reason.label}
                 </option>
               ))}
             </select>
@@ -142,7 +138,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
 
           <div>
             <label htmlFor="cf-subject" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-              Subject
+              {s.contactForm.subject}
             </label>
             <input
               id="cf-subject"
@@ -155,7 +151,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
 
           <div>
             <label htmlFor="cf-message" className="text-xs font-medium text-ink-600 dark:text-ink-300">
-              Message
+              {s.contactForm.message}
             </label>
             <textarea
               id="cf-message"
@@ -167,9 +163,7 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
           </div>
 
           {status === "error" && (
-            <p className="text-sm text-red-600 dark:text-red-400">
-              Something went wrong sending that — please try again in a moment.
-            </p>
+            <p className="text-sm text-red-600 dark:text-red-400">{s.contactForm.errorGeneric}</p>
           )}
 
           <div className="flex items-center gap-3 pt-1">
@@ -179,14 +173,14 @@ export function ContactMessageForm({ accessKey, className = "" }: ContactMessage
               className="btn-primary disabled:cursor-not-allowed disabled:opacity-60"
             >
               <Send className="size-4" />
-              {status === "sending" ? "Sending…" : "Send"}
+              {status === "sending" ? s.contactForm.sending : s.contactForm.send}
             </button>
             <button
               type="button"
               onClick={() => setOpen(false)}
               className="text-sm font-medium text-ink-500 hover:text-ink-700 dark:text-ink-400 dark:hover:text-ink-200"
             >
-              Cancel
+              {s.contactForm.cancel}
             </button>
           </div>
         </form>

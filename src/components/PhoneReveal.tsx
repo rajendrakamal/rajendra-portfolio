@@ -2,18 +2,12 @@ import { Check, Copy, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
 import { trackEvent } from "../lib/analytics";
+import { useStrings } from "../i18n/strings";
 
 type PhoneRevealProps = {
   phone: string;
   className?: string;
 };
-
-const REASONS = [
-  "Job opportunity",
-  "Consulting / freelance work",
-  "Speaking or networking",
-  "Something else",
-];
 
 /**
  * Gates the phone number behind a one-tap "what's this about" prompt.
@@ -26,6 +20,7 @@ export function PhoneReveal({ phone, className = "" }: PhoneRevealProps) {
   const [reason, setReason] = useState<string | null>(null);
   const { copied, copy } = useCopyToClipboard();
   const containerRef = useRef<HTMLDivElement>(null);
+  const s = useStrings();
 
   useEffect(() => {
     if (!open) return;
@@ -51,8 +46,8 @@ export function PhoneReveal({ phone, className = "" }: PhoneRevealProps) {
         <button
           type="button"
           onClick={() => copy(phone)}
-          aria-label="Copy phone number"
-          title="Copy phone number"
+          aria-label={s.phone.copyAria}
+          title={s.phone.copyAria}
           className="inline-flex size-8 items-center justify-center rounded-full transition-colors hover:bg-ink-900/5 dark:hover:bg-white/10"
         >
           {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
@@ -70,27 +65,30 @@ export function PhoneReveal({ phone, className = "" }: PhoneRevealProps) {
         className="btn-secondary"
       >
         <Phone className="size-4" />
-        Request phone number
+        {s.phone.requestNumber}
       </button>
 
       {open && (
         <div className="glass-card absolute top-full left-1/2 z-10 mt-2 w-64 -translate-x-1/2 p-3 text-left">
           <p className="text-xs font-medium text-ink-500 dark:text-ink-400">
-            What's this regarding?
+            {s.phone.whatsThisAbout}
           </p>
           <div className="mt-2 flex flex-col gap-1.5">
-            {REASONS.map((r) => (
+            {/* value stays the canonical English string (see strings.ts) so
+                the trackEvent name stays consistent in analytics regardless
+                of display language; only the visible label translates. */}
+            {s.contactReasons.map((r) => (
               <button
-                key={r}
+                key={r.value}
                 type="button"
                 onClick={() => {
-                  setReason(r);
+                  setReason(r.value);
                   setOpen(false);
-                  trackEvent(`phone-reveal:${r}`);
+                  trackEvent(`phone-reveal:${r.value}`);
                 }}
                 className="rounded-lg px-2.5 py-1.5 text-left text-sm text-ink-700 transition-colors hover:bg-accent-50 hover:text-accent-700 dark:text-ink-200 dark:hover:bg-accent-900/30 dark:hover:text-accent-300"
               >
-                {r}
+                {r.label}
               </button>
             ))}
           </div>

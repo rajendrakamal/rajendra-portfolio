@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Reveal } from "./Reveal";
+import { useLanguage } from "../i18n/language";
+import { useStrings } from "../i18n/strings";
 import type { Post } from "../lib/posts";
 
 type BlogPostCardProps = {
@@ -8,15 +10,19 @@ type BlogPostCardProps = {
   delay?: number;
 };
 
-function formatDate(isoDate: string) {
+function formatDate(isoDate: string, locale: string) {
   if (!isoDate) return "";
   const parsed = new Date(`${isoDate}T00:00:00`);
   if (Number.isNaN(parsed.getTime())) return isoDate;
-  return parsed.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  return parsed.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
 }
 
 /** One blog post preview card — used on both the blog index and the home page teaser. */
 export function BlogPostCard({ post, delay = 0 }: BlogPostCardProps) {
+  const { language } = useLanguage();
+  const s = useStrings();
+  const locale = language === "fr" ? "fr-CA" : "en-US";
+
   return (
     <Reveal delay={delay} className="h-full">
       <Link
@@ -24,7 +30,9 @@ export function BlogPostCard({ post, delay = 0 }: BlogPostCardProps) {
         className="glass-card group flex h-full flex-col p-6 transition-transform hover:-translate-y-1"
       >
         {post.date && (
-          <p className="font-mono text-xs text-ink-500 dark:text-ink-400">{formatDate(post.date)}</p>
+          <p className="font-mono text-xs text-ink-500 dark:text-ink-400">
+            {formatDate(post.date, locale)}
+          </p>
         )}
         <h3 className="h3 mt-2 text-ink-900 dark:text-ink-50">{post.title}</h3>
         {post.excerpt && (
@@ -45,7 +53,7 @@ export function BlogPostCard({ post, delay = 0 }: BlogPostCardProps) {
             ))}
           </div>
           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 group-hover:underline dark:text-ink-50">
-            Read
+            {s.blogCard.read}
             <ArrowRight className="size-3.5" />
           </span>
         </div>

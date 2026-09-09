@@ -7,6 +7,8 @@ import remarkGfm from "remark-gfm";
 import { Reveal } from "../components/Reveal";
 import { trackPageview } from "../lib/analytics";
 import { getPostBySlug } from "../lib/posts";
+import { useLanguage } from "../i18n/language";
+import { useStrings } from "../i18n/strings";
 import { profile } from "../data/content";
 
 // GFM tables can be wider than the viewport (see any SCD comparison table).
@@ -24,16 +26,19 @@ function Table(props: ComponentPropsWithoutRef<"table">) {
   );
 }
 
-function formatDate(isoDate: string) {
+function formatDate(isoDate: string, locale: string) {
   if (!isoDate) return "";
   const parsed = new Date(`${isoDate}T00:00:00`);
   if (Number.isNaN(parsed.getTime())) return isoDate;
-  return parsed.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  return parsed.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
 }
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const { language } = useLanguage();
+  const s = useStrings();
+  const post = slug ? getPostBySlug(slug, language) : undefined;
+  const locale = language === "fr" ? "fr-CA" : "en-US";
 
   useEffect(() => {
     if (!post) return;
@@ -59,12 +64,12 @@ export function BlogPostPage() {
             className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-600 hover:text-ink-900 dark:text-ink-400 dark:hover:text-ink-50"
           >
             <ArrowLeft className="size-3.5" />
-            All posts
+            {s.blogPost.allPosts}
           </Link>
 
           {post.date && (
             <p className="mt-6 font-mono text-xs text-ink-500 dark:text-ink-400">
-              {formatDate(post.date)}
+              {formatDate(post.date, locale)}
             </p>
           )}
           <h1 className="h1 mt-2 text-ink-900 dark:text-ink-50">{post.title}</h1>

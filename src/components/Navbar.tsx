@@ -5,7 +5,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { navLinks } from "../data/navigation";
 import { profile } from "../data/content";
 import { useActiveSection } from "../hooks/useActiveSection";
+import { useStrings } from "../i18n/strings";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageToggle } from "./LanguageToggle";
 
 const sectionIds = navLinks.map((link) => link.id);
 
@@ -14,6 +16,7 @@ export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const sectionActiveId = useActiveSection(sectionIds);
+  const s = useStrings();
   const isBlogRoute = location.pathname.startsWith("/blog");
   // On the home page, the active nav item tracks scroll position; on any
   // /blog route, it's just "blog" — sectionActiveId will be empty there
@@ -69,7 +72,7 @@ export function Navbar() {
                     : "text-ink-600 hover:text-ink-900 dark:text-ink-300 dark:hover:text-ink-50"
                 }`}
               >
-                {link.label}
+                {s.nav[link.id as keyof typeof s.nav]}
               </button>
             </li>
           ))}
@@ -89,17 +92,18 @@ export function Navbar() {
                   : "text-ink-600 hover:text-ink-900 dark:text-ink-300 dark:hover:text-ink-50"
               }`}
             >
-              Blog
+              {s.nav.blog}
             </Link>
           </li>
         </ul>
 
         <div className="flex items-center gap-2">
+          <LanguageToggle />
           <ThemeToggle />
           <button
             type="button"
             onClick={() => setIsOpen((v) => !v)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-label={isOpen ? s.nav.closeMenu : s.nav.openMenu}
             aria-expanded={isOpen}
             className="icon-btn md:hidden"
           >
@@ -128,7 +132,7 @@ export function Navbar() {
                       : "text-ink-700 dark:text-ink-200"
                   }`}
                 >
-                  {link.label}
+                  {s.nav[link.id as keyof typeof s.nav]}
                 </button>
               </li>
             ))}
@@ -142,7 +146,7 @@ export function Navbar() {
                     : "text-ink-700 dark:text-ink-200"
                 }`}
               >
-                Blog
+                {s.nav.blog}
               </Link>
             </li>
           </motion.ul>

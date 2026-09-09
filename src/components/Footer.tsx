@@ -2,6 +2,7 @@ import { ArrowUp, Mail, Phone } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { trackEvent } from "../lib/analytics";
+import { useStrings } from "../i18n/strings";
 import { contactForm, profile } from "../data/content";
 
 export function Footer() {
@@ -10,6 +11,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   const location = useLocation();
   const navigate = useNavigate();
+  const s = useStrings();
 
   // The Contact section only exists on the home page — from any other
   // route (e.g. /blog), navigate there first and let HomePage's own effect
@@ -26,7 +28,7 @@ export function Footer() {
     <footer className="border-t border-ink-200/70 dark:border-ink-800/70">
       <div className="container-page flex flex-col items-center gap-6 py-10 sm:flex-row sm:justify-between">
         <p className="font-mono text-xs text-ink-500 dark:text-ink-400">
-          © {year} {profile.name} · Built with React, TypeScript & Tailwind
+          © {year} {profile.name} · {s.footer.builtWith}
         </p>
 
         <div className="flex items-center gap-3">
@@ -34,8 +36,8 @@ export function Footer() {
             <button
               type="button"
               onClick={goToContact}
-              aria-label="Email — send a message from the contact section"
-              title="Send a message from the contact section"
+              aria-label={s.footer.emailAria}
+              title={s.footer.emailTitle}
               className="icon-btn"
             >
               <Mail className="size-4" />
@@ -45,8 +47,8 @@ export function Footer() {
             <button
               type="button"
               onClick={goToContact}
-              aria-label="Phone — request in the contact section"
-              title="Request phone number in the contact section"
+              aria-label={s.footer.phoneAria}
+              title={s.footer.phoneTitle}
               className="icon-btn"
             >
               <Phone className="size-4" />
@@ -58,7 +60,7 @@ export function Footer() {
               target="_blank"
               rel="noreferrer noopener"
               onClick={() => trackEvent("social-link:linkedin:footer")}
-              aria-label="LinkedIn"
+              aria-label={s.contact.linkedin}
               className="icon-btn"
             >
               <LinkedinIcon className="size-4" />
@@ -70,7 +72,7 @@ export function Footer() {
               target="_blank"
               rel="noreferrer noopener"
               onClick={() => trackEvent("social-link:github:footer")}
-              aria-label="GitHub"
+              aria-label={s.contact.github}
               className="icon-btn"
             >
               <GithubIcon className="size-4" />
@@ -79,7 +81,7 @@ export function Footer() {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            aria-label="Back to top"
+            aria-label={s.footer.backToTop}
             className="icon-btn"
           >
             <ArrowUp className="size-4" />

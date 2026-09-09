@@ -1,25 +1,28 @@
 import { motion } from "framer-motion";
 import { CountUp } from "../CountUp";
 import { Reveal } from "../Reveal";
+import { useStrings } from "../../i18n/strings";
 import { experience, skillGroups } from "../../data/content";
 
 const totalSkills = skillGroups.reduce((sum, group) => sum + group.skills.length, 0);
 
-const stats = [
-  { label: "Years of experience", value: 7, suffix: "+" },
-  { label: "Companies & teams", value: experience.length, suffix: "" },
-  { label: "Tools & techniques", value: totalSkills, suffix: "+" },
-];
-
 export function AtAGlance() {
+  const s = useStrings();
+
+  const stats = [
+    { label: s.atAGlance.yearsExperience, value: 7, suffix: "+" },
+    { label: s.atAGlance.companiesTeams, value: experience.length, suffix: "" },
+    { label: s.atAGlance.toolsTechniques, value: totalSkills, suffix: "+" },
+  ];
+
   return (
     <section className="section-py border-t border-ink-200/70 bg-ink-100/40 dark:border-ink-800/70 dark:bg-ink-900/30">
       <div className="container-page grid gap-10 lg:grid-cols-[0.6fr_1fr] lg:items-center">
         <Reveal>
-          <p className="section-heading">At a glance</p>
-          <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">A quick snapshot</h2>
+          <p className="section-heading">{s.atAGlance.kicker}</p>
+          <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">{s.atAGlance.title}</h2>
           <p className="mt-4 text-base leading-relaxed text-ink-600 dark:text-ink-300">
-            Experience, breadth, and the tools I reach for most.
+            {s.atAGlance.subtitle}
           </p>
         </Reveal>
 

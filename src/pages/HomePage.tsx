@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { trackPageview } from "../lib/analytics";
+import { localize, useLanguage } from "../i18n/language";
 import { Hero } from "../components/sections/Hero";
 import { AtAGlance } from "../components/sections/AtAGlance";
 import { About } from "../components/sections/About";
@@ -18,14 +19,15 @@ type NavigateState = { scrollTo?: string } | null;
 
 export function HomePage() {
   const location = useLocation();
+  const { language } = useLanguage();
 
   useEffect(() => {
-    document.title = `${profile.name} — ${profile.role}`;
+    document.title = `${profile.name} — ${localize(profile.role, language)}`;
     // Fired here (not a route-level effect) so document.title is always
     // correct by the time GoatCounter reads it — see BlogIndexPage.tsx and
     // BlogPostPage.tsx, which do the same for their own routes.
     trackPageview("/", document.title);
-  }, []);
+  }, [language]);
 
   // When Navbar sends someone here from a different route (e.g. clicking
   // "About" while on /blog), it passes the target section id via router

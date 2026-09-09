@@ -3,12 +3,14 @@ import { ContactMessageForm } from "../ContactMessageForm";
 import { PhoneReveal } from "../PhoneReveal";
 import { Reveal } from "../Reveal";
 import { trackEvent } from "../../lib/analytics";
+import { useStrings } from "../../i18n/strings";
 import { contactForm, profile } from "../../data/content";
 
 export function Contact() {
   const { email, phone, linkedin, github } = profile.socialLinks;
   const { web3formsAccessKey } = contactForm;
   const hasContactInfo = Boolean(web3formsAccessKey || phone || linkedin || github);
+  const s = useStrings();
 
   return (
     <section
@@ -17,11 +19,10 @@ export function Contact() {
     >
       <div className="container-page">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="section-heading justify-center">Contact</p>
-          <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">Let's talk about data</h2>
+          <p className="section-heading justify-center">{s.contact.kicker}</p>
+          <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">{s.contact.title}</h2>
           <p className="mt-4 text-base leading-relaxed text-ink-600 dark:text-ink-300">
-            I'm always open to conversations about revenue analytics, pricing
-            strategy, and building reporting that leadership actually trusts.
+            {s.contact.subtitle}
           </p>
 
           {hasContactInfo ? (
@@ -37,7 +38,7 @@ export function Contact() {
                   className="btn-secondary"
                 >
                   <LinkedinIcon className="size-4" />
-                  LinkedIn
+                  {s.contact.linkedin}
                 </a>
               )}
               {github && (
@@ -49,7 +50,7 @@ export function Contact() {
                   className="btn-secondary"
                 >
                   <GithubIcon className="size-4" />
-                  GitHub
+                  {s.contact.github}
                 </a>
               )}
             </div>
@@ -57,14 +58,13 @@ export function Contact() {
 
           {(web3formsAccessKey || phone) && (
             <p className="mt-4 font-mono text-xs text-ink-400 dark:text-ink-500">
-              No inbox spam, promise — messages go straight to me and my
-              number is shared only when there's a reason to.
+              {s.contact.noSpamNote}
             </p>
           )}
 
           {!hasContactInfo && (
             <p className="mt-8 inline-block rounded-full border border-dashed border-ink-300 px-5 py-3 font-mono text-xs text-ink-500 dark:border-ink-700 dark:text-ink-400">
-              Contact details coming soon — add them in{" "}
+              {s.contact.comingSoonPrefix}{" "}
               <code>src/data/content.ts</code>
             </p>
           )}

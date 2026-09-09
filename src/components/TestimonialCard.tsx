@@ -1,5 +1,7 @@
 import { Quote, User } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { localize, useLanguage } from "../i18n/language";
+import { useStrings } from "../i18n/strings";
 import type { Testimonial } from "../data/content";
 
 type TestimonialCardProps = Testimonial & {
@@ -9,12 +11,15 @@ type TestimonialCardProps = Testimonial & {
 
 /** One testimonial card — clearly badged when it's still placeholder content. */
 export function TestimonialCard({ quote, name, title, isPlaceholder, delay = 0 }: TestimonialCardProps) {
+  const { language } = useLanguage();
+  const s = useStrings();
+
   return (
     <Reveal delay={delay} className="h-full">
       <div className="glass-card relative flex h-full flex-col p-6">
         {isPlaceholder && (
           <span className="absolute top-4 right-4 rounded-full border border-dashed border-ink-300 px-2 py-0.5 font-mono text-[10px] font-medium tracking-wide text-ink-500 dark:border-ink-600 dark:text-ink-400">
-            Placeholder
+            {s.testimonials.placeholderBadge}
           </span>
         )}
 
@@ -27,7 +32,7 @@ export function TestimonialCard({ quote, name, title, isPlaceholder, delay = 0 }
               : "text-ink-600 dark:text-ink-300"
           }`}
         >
-          {quote}
+          {localize(quote, language)}
         </p>
 
         <div className="mt-5 flex items-center gap-3 border-t border-ink-200/70 pt-4 dark:border-ink-800/70">
@@ -42,7 +47,9 @@ export function TestimonialCard({ quote, name, title, isPlaceholder, delay = 0 }
             >
               {name}
             </p>
-            <p className="text-xs leading-snug text-ink-500 dark:text-ink-400">{title}</p>
+            <p className="text-xs leading-snug text-ink-500 dark:text-ink-400">
+              {localize(title, language)}
+            </p>
           </div>
         </div>
       </div>

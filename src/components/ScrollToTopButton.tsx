@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useStrings } from "../i18n/strings";
 
 const SHOW_AFTER_PX = 480;
 
@@ -12,6 +13,7 @@ const SHOW_AFTER_PX = 480;
  */
 export function ScrollToTopButton() {
   const [visible, setVisible] = useState(false);
+  const s = useStrings();
 
   useEffect(() => {
     let ticking = false;
@@ -42,7 +44,7 @@ export function ScrollToTopButton() {
         <motion.button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Scroll to top"
+          aria-label={s.scrollTop.aria}
           initial={{ opacity: 0, y: 12, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 12, scale: 0.9 }}

@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Reveal } from "../Reveal";
 import { BlogPostCard } from "../BlogPostCard";
+import { useLanguage } from "../../i18n/language";
+import { useStrings } from "../../i18n/strings";
 import type { Post } from "../../lib/posts";
 
 const FEATURED_COUNT = 3;
@@ -21,12 +23,14 @@ const FEATURED_COUNT = 3;
  */
 export function BlogTeaser() {
   const [featured, setFeatured] = useState<Post[] | null>(null);
+  const { language } = useLanguage();
+  const s = useStrings();
 
   useEffect(() => {
-    import("../../lib/posts").then(({ posts }) => {
-      setFeatured(posts.slice(0, FEATURED_COUNT));
+    import("../../lib/posts").then(({ getPosts }) => {
+      setFeatured(getPosts(language).slice(0, FEATURED_COUNT));
     });
-  }, []);
+  }, [language]);
 
   if (!featured || featured.length === 0) return null;
 
@@ -35,14 +39,14 @@ export function BlogTeaser() {
       <div className="container-page">
         <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="section-heading">Blog</p>
-            <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">Recent writing</h2>
+            <p className="section-heading">{s.blogTeaser.kicker}</p>
+            <h2 className="h2 mt-3 text-ink-900 dark:text-ink-50">{s.blogTeaser.title}</h2>
           </div>
           <Link
             to="/blog"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 hover:underline dark:text-ink-50"
           >
-            View all posts
+            {s.blogTeaser.viewAll}
             <ArrowRight className="size-3.5" />
           </Link>
         </Reveal>

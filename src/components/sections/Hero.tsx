@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Mail } from "lucide-react";
 import portrait from "../../assets/portrait.jpg";
 import { ResumeGate } from "../ResumeGate";
+import { localize, useLanguage } from "../../i18n/language";
+import { useStrings } from "../../i18n/strings";
 import { profile } from "../../data/content";
 
 function scrollTo(id: string) {
@@ -9,6 +11,10 @@ function scrollTo(id: string) {
 }
 
 export function Hero() {
+  const { language } = useLanguage();
+  const s = useStrings();
+  const role = localize(profile.role, language);
+
   return (
     <section
       id="top"
@@ -25,28 +31,30 @@ export function Hero() {
               <span className="absolute inline-flex size-full animate-pulse-slow rounded-full bg-ink-900 dark:bg-ink-100" />
               <span className="relative inline-flex size-2 rounded-full bg-ink-900 dark:bg-ink-100" />
             </span>
-            {profile.availability}
+            {localize(profile.availability, language)}
           </span>
 
           <h1 className="h1 mt-6 text-ink-900 dark:text-ink-50">{profile.name}</h1>
           <p className="font-display mt-2 text-xl font-semibold text-ink-700 sm:text-2xl dark:text-ink-200">
-            {profile.role}
+            {role}
           </p>
 
-          <p className="lead mt-6 max-w-xl text-ink-600 dark:text-ink-300">{profile.tagline}</p>
+          <p className="lead mt-6 max-w-xl text-ink-600 dark:text-ink-300">
+            {localize(profile.tagline, language)}
+          </p>
 
           <p className="mt-3 font-mono text-sm text-ink-500 dark:text-ink-400">
-            {profile.location}
+            {localize(profile.location, language)}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <button type="button" onClick={() => scrollTo("projects")} className="btn-primary">
-              View projects
+              {s.hero.viewProjects}
               <ArrowRight className="size-4" />
             </button>
             <button type="button" onClick={() => scrollTo("contact")} className="btn-secondary">
               <Mail className="size-4" />
-              Get in touch
+              {s.hero.getInTouch}
             </button>
             <ResumeGate resumeUrl={profile.socialLinks.resumeUrl} />
           </div>
@@ -68,7 +76,7 @@ export function Hero() {
               <p className="font-display text-lg font-semibold text-white sm:text-xl">
                 {profile.name}
               </p>
-              <p className="text-sm text-white/85">{profile.role}</p>
+              <p className="text-sm text-white/85">{role}</p>
             </div>
           </div>
         </motion.div>
