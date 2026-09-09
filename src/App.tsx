@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import { ScrollToTopButton } from "./components/ScrollToTopButton";
 import { HomePage } from "./pages/HomePage";
 
 // Code-split the blog routes: react-markdown + remark-gfm are only needed
@@ -40,6 +41,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <ScrollToTopButton />
     </>
   );
 }
